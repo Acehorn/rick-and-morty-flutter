@@ -7,3 +7,4 @@ final charactersRemoteDatasourceProvider =
   final dio = ref.watch(dioProvider);
   return CharactersRemoteDatasourceImpl(dio);
 });
+ 

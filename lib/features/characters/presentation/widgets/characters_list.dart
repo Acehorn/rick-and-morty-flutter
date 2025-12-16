@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:rickmortyproject/features/characters/presentation/providers/characters_list_state.dart';
+import 'package:rickmortyproject/features/characters/domain/entities/character.dart';
 import 'package:rickmortyproject/features/characters/presentation/widgets/characters_list_item.dart';
 
 class CharacterList extends StatefulWidget {
-  final CharactersListState state;
-    final VoidCallback onLoadMore;
+ final List<Character> characters;
+  final bool isLoading;
+  final String? error;
+  final VoidCallback? onLoadMore;
 
   const CharacterList({
     super.key,
-    required this.state,
-    required this.onLoadMore,
+    required this.characters,
+    required this.isLoading,
+    this.error,
+    this.onLoadMore,
   });
 
   @override
@@ -26,41 +30,48 @@ class _CharacterListState extends State<CharacterList> {
   }
 
 void _onScroll() {
+  if (widget.onLoadMore == null) return;
+
   if (_scrollController.position.pixels >=
       _scrollController.position.maxScrollExtent - 200) {
-    if (!widget.state.isLoading && widget.state.hasNextPage) {
-      widget.onLoadMore();
-    }
+    widget.onLoadMore!.call();
   }
 }
 
 
 
-  @override
-  Widget build(BuildContext context) {
-    if (widget.state.isLoading && widget.state.characters.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
-    }
+@override
+Widget build(BuildContext context) {
+  if (widget.isLoading && widget.characters.isEmpty) {
+    return const Center(child: CircularProgressIndicator());
+  }
 
-    if (widget.state.error != null) {
-      return Center(child: Text(widget.state.error!));
-    }
+  if (widget.error != null) {
+    return Center(child: Text(widget.error!));
+  }
 
-    return ListView.builder(
-      controller: _scrollController,
-    itemCount: widget.state.characters.length +
-    (widget.state.isLoading ? 1 : 0),
-itemBuilder: (context, index) {
-  if (index >= widget.state.characters.length) {
-    return const Padding(
-      padding: EdgeInsets.all(16),
-      child: Center(child: CircularProgressIndicator()),
+  if (widget.characters.isEmpty) {
+    return const Center(
+      child: Text('No characters found'),
     );
   }
 
-  final character = widget.state.characters[index];
-  return CharacterListItem(character: character);
-},
-    );
-  }
+  return ListView.builder(
+    controller: _scrollController,
+    itemCount: widget.characters.length +
+        (widget.isLoading && widget.onLoadMore != null ? 1 : 0),
+    itemBuilder: (context, index) {
+      if (index >= widget.characters.length) {
+        return const Padding(
+          padding: EdgeInsets.all(16),
+          child: Center(child: CircularProgressIndicator()),
+        );
+      }
+
+      final character = widget.characters[index];
+      return CharacterListItem(character: character);
+    },
+  );
+}
+
 }

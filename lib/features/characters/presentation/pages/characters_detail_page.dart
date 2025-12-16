@@ -1,26 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rickmortyproject/features/favorites/presentation/providers/favorites_provider.dart';
 import '../../domain/entities/character.dart';
 
-class CharacterDetailPage extends StatelessWidget {
+class CharacterDetailPage extends ConsumerWidget {
   final Character character;
 
-  const CharacterDetailPage({
-    super.key,
-    required this.character,
-  });
+  const CharacterDetailPage({super.key, required this.character});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoritesState = ref.watch(favoritesProvider);
+    final isFavorite = favoritesState.isFavorite(character.id);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(character.name),
+           actions: [
+          IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? Colors.red : null,
+            ),
+            onPressed: () {
+              ref
+                  .read(favoritesProvider.notifier)
+                  .toggleFavorite(character.id);
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // HERO IMAGE
             Hero(
               tag: 'character-${character.id}',
               child: ClipRRect(
