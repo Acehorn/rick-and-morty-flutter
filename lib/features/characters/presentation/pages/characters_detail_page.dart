@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rickmortyproject/features/characters/presentation/widgets/characters_episode_list.dart';
 import 'package:rickmortyproject/features/favorites/presentation/providers/favorites_provider.dart';
+import '../widgets/character_info_tile.dart';
 import '../../domain/entities/character.dart';
 
 class CharacterDetailPage extends ConsumerWidget {
@@ -16,7 +18,7 @@ class CharacterDetailPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(character.name),
-           actions: [
+        actions: [
           IconButton(
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
@@ -50,56 +52,27 @@ class CharacterDetailPage extends ConsumerWidget {
 
             const SizedBox(height: 24),
 
-            _infoTile('Species', character.species),
-            _infoTile('Origin', character.origin),
-            _infoTile('Last Location', character.location),
+            CharacterInfoTile(
+              label: 'Species',
+              value: character.species,
+            ),
+            CharacterInfoTile(
+              label: 'Origin',
+              value: character.origin,
+            ),
+            CharacterInfoTile(
+              label: 'Last Location',
+              value: character.location,
+            ),
 
             const SizedBox(height: 24),
 
-            _episodesList(character.episodes),
+            CharacterEpisodesList(
+              episodes: character.episodes,
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _infoTile(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(value),
-        ],
-      ),
-    );
-  }
-
-  Widget _episodesList(List<String> episodes) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Episodes',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        ...episodes.map(
-          (e) => Text(
-            e,
-            style: const TextStyle(color: Colors.grey),
-          ),
-        ),
-      ],
     );
   }
 }

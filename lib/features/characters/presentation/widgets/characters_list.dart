@@ -38,6 +38,13 @@ void _onScroll() {
   }
 }
 
+@override
+void dispose() {
+  _scrollController.dispose();
+  super.dispose();
+}
+
+
 
 
 @override

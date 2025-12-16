@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:rickmortyproject/features/characters/data/datasources/characters_remote_datasource.dart';
-import 'package:rickmortyproject/features/characters/domain/entities/character_mapper.dart';
+import 'package:rickmortyproject/features/characters/data/mappers/character_mapper.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/network/network_exceptions.dart';
 import '../../domain/entities/character.dart';

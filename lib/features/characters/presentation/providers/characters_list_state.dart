@@ -6,7 +6,6 @@ class CharactersListState {
   final String? error;
   final int currentPage;
   final bool hasNextPage;
-  final void Function()? loadNextPage;
   final String searchQuery; 
 
   const CharactersListState({
@@ -15,7 +14,6 @@ class CharactersListState {
     this.error,
     this.currentPage = 1,
     this.hasNextPage = true,
-    this.loadNextPage,
      this.searchQuery = '', 
   });
 
@@ -35,7 +33,6 @@ class CharactersListState {
       currentPage: currentPage ?? this.currentPage,
       hasNextPage: hasNextPage ?? this.hasNextPage,
     searchQuery: searchQuery ?? this.searchQuery,
-      loadNextPage: loadNextPage ?? this.loadNextPage,
     );
   }
 }
