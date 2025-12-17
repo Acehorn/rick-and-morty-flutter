@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/storage/hive_provider.dart';
+import '../../../core/storage/hive_provider.dart';
 import 'favorites_notifier.dart';
 import 'favorites_state.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rickmortyproject/features/characters/presentation/widgets/characters_episode_list.dart';
-import 'package:rickmortyproject/features/favorites/presentation/providers/favorites_provider.dart';
+import 'package:rickmortyproject/features/favorites/providers/favorites_provider.dart';
 import '../widgets/character_info_tile.dart';
 import '../../domain/entities/character.dart';
 

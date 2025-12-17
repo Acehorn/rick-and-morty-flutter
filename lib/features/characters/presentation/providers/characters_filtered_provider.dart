@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rickmortyproject/features/characters/presentation/providers/characters_list_provider.dart';
 import 'package:rickmortyproject/features/characters/presentation/providers/characters_filter_provider.dart';
-import '../../../favorites/presentation/providers/favorites_provider.dart';
+import '../../../favorites/providers/favorites_provider.dart';
 
 final filteredCharactersProvider = Provider((ref) {
   final listState = ref.watch(charactersListProvider);
